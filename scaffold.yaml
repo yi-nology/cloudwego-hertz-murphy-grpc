@@ -1,0 +1,75 @@
+name: "Murphy CloudWeGo gRPC API"
+version: "1.0.0"
+description: "CloudWeGo Hertz Kitex 微服务脚手架，集成 hz IDL 代码生成、SQLite/MySQL/PostgreSQL、Redis"
+author: "murphyyi"
+tags:
+  - go
+  - hertz
+  - cloudwego
+  - grpc
+  - microservice
+
+variables:
+  - name: project_name
+    type: string
+    default: "my-service"
+    prompt: "项目名称"
+    required: true
+    group: "Basic"
+  
+  - name: module_name
+    type: string
+    default: "github.com/example/my-service"
+    prompt: "Go Module 名称"
+    required: true
+    group: "Basic"
+  
+  - name: description
+    type: string
+    default: "A Hertz microservice"
+    prompt: "项目描述"
+    group: "Basic"
+  
+  - name: author
+    type: string
+    default: "张三"
+    prompt: "作者名称"
+    group: "Basic"
+
+  - name: server_port
+    type: number
+    default: 8888
+    prompt: "服务端口"
+    group: "Server"
+
+  - name: db_driver
+    type: enum
+    options:
+      - sqlite
+      - mysql
+      - postgres
+    default: "mysql"
+    prompt: "数据库类型"
+    group: "Database"
+  
+  - name: db_name
+    type: string
+    default: "my_service"
+    prompt: "数据库名称"
+    group: "Database"
+
+  - name: enable_redis
+    type: boolean
+    default: true
+    prompt: "启用 Redis"
+    group: "Features"
+
+files:
+  - source: "."
+    target: "{{.project_name}}/"
+    template: true
+
+ignore:
+  - ".git"
+  - ".DS_Store"
+  - "scaffold.yaml"

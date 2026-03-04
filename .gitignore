@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+*/.DS_Store
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go build
+bin/
+obj/
+
+# Go modules
+go.sum
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build artifacts
+dist/
+build/
