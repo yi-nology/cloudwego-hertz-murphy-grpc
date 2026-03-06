@@ -6,30 +6,17 @@ server:
   write_timeout: 30
 
 database:
-  driver: "{{.db_driver}}"
-{{- if eq .db_driver "sqlite"}}
+  driver: "sqlite"
   # SQLite 配置：文件路径或 ":memory:" 表示内存数据库
-  db_name: "./data/{{.db_name}}.db"
-{{- else if eq .db_driver "mysql"}}
-  host: "localhost"
-  port: 3306
-  user: "root"
-  password: ""
-  db_name: "{{.db_name}}"
-{{- else if eq .db_driver "postgres"}}
-  host: "localhost"
-  port: 5432
-  user: "postgres"
-  password: ""
-  db_name: "{{.db_name}}"
-  ssl_mode: "disable"
-{{- end}}
+  db_name: "./data/app.db"
 
+{{- if .enable_redis}}
 redis:
   host: "localhost"
   port: 6379
   password: ""
   db: 0
+{{- end}}
 
 log:
   level: "info"

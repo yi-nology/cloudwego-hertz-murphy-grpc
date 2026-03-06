@@ -2,6 +2,19 @@ name: "Murphy CloudWeGo gRPC API"
 version: "1.0.0"
 description: "CloudWeGo Hertz Kitex 微服务脚手架，集成 hz IDL 代码生成、SQLite/MySQL/PostgreSQL、Redis"
 author: "murphyyi"
+repository: "https://github.com/yi-nology/cloudwego-template"
+homepage: "https://github.com/yi-nology/cloudwego-template#readme"
+bugs: "https://github.com/yi-nology/cloudwego-template/issues"
+license: "MIT"
+keywords:
+  - go
+  - hertz
+  - cloudwego
+  - grpc
+  - microservice
+  - kitex
+  - idl-driven
+  - sqlite
 tags:
   - go
   - hertz
@@ -48,7 +61,7 @@ variables:
       - sqlite
       - mysql
       - postgres
-    default: "mysql"
+    default: "sqlite"
     prompt: "数据库类型"
     group: "Database"
   
@@ -60,9 +73,10 @@ variables:
 
   - name: enable_redis
     type: boolean
-    default: true
-    prompt: "启用 Redis"
+    default: false
+    prompt: "启用 Redis（默认关闭，可通过配置文件启用）"
     group: "Features"
+    description: "Redis 默认关闭。启用后需在 config.yaml 中配置连接信息"
 
 files:
   - source: "."

@@ -9,7 +9,7 @@ import (
 type Config struct {
 	Server   ServerConfig   `mapstructure:"server"`
 	Database DatabaseConfig `mapstructure:"database"`
-	Redis    RedisConfig    `mapstructure:"redis"`
+	Redis    *RedisConfig   `mapstructure:"redis"` // 指针类型，可选
 	Log      LogConfig      `mapstructure:"log"`
 	App      AppConfig      `mapstructure:"app"`
 }
@@ -98,13 +98,8 @@ func InitWithDefault() error {
 	viper.SetDefault("server.mode", "debug")
 	viper.SetDefault("server.read_timeout", 30)
 	viper.SetDefault("server.write_timeout", 30)
-	viper.SetDefault("database.driver", "mysql")
-	viper.SetDefault("database.host", "localhost")
-	viper.SetDefault("database.port", 3306)
-	viper.SetDefault("database.ssl_mode", "disable")
-	viper.SetDefault("redis.host", "localhost")
-	viper.SetDefault("redis.port", 6379)
-	viper.SetDefault("redis.db", 0)
+	viper.SetDefault("database.driver", "sqlite")
+	viper.SetDefault("database.db_name", "./data/app.db")
 	viper.SetDefault("log.level", "info")
 	viper.SetDefault("log.max_size", 100)
 	viper.SetDefault("log.max_backups", 10)

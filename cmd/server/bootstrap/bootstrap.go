@@ -32,9 +32,11 @@ func Bootstrap() (*server.Hertz, error) {
 		return nil, fmt.Errorf("init database failed: %w", err)
 	}
 
-	// 4. 初始化 Redis
-	if err := initRedis(cfg); err != nil {
-		return nil, fmt.Errorf("init redis failed: %w", err)
+	// 4. 初始化 Redis（如果启用）
+	if cfg.Redis != nil {
+		if err := initRedis(cfg); err != nil {
+			return nil, fmt.Errorf("init redis failed: %w", err)
+		}
 	}
 
 	// 5. 初始化 HTTP 服务器
@@ -74,7 +76,10 @@ func initDatabase(cfg *conf.Config) error {
 }
 
 func initRedis(cfg *conf.Config) error {
-	return redis.Init(&cfg.Redis)
+	if cfg.Redis == nil {
+		return nil
+	}
+	return redis.Init(cfg.Redis)
 }
 
 func initServer(cfg *conf.Config) *server.Hertz {
@@ -96,5 +101,5 @@ func initServer(cfg *conf.Config) *server.Hertz {
 func Cleanup() {
 	logger.Sync()
 	_ = db.Close()
-	_ = redis.Close()
+	// Redis cleanup handled in defer if initialized
 }

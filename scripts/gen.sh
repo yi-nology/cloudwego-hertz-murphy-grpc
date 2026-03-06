@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -euo pipefail
 
 ############################################
@@ -106,11 +106,12 @@ _ensure_hz_meta() {
 ############################################
 
 _build_exclude_args() {
-  local -n _result=$1  # nameref to output array
-  _result=()
+  local result_name=$1
+  local -a files=()
   while IFS= read -r -d '' f; do
-    _result+=("-E" "$f")
+    files+=("-E" "$f")
   done < <(find "$HANDLER_DIR" -name "*.go" -print0 2>/dev/null)
+  eval "${result_name}=(\"\${files[@]}\")"
 }
 
 ############################################
@@ -120,15 +121,16 @@ _build_exclude_args() {
 ############################################
 
 _build_proto_path_args() {
-  local -n _pp_result=$1
+  local result_name=$1
   local idl_file=$2
   local idl_dir
   idl_dir="$(dirname "$idl_file")"
-  _pp_result=()
+  local -a args=()
   # 如果 IDL 文件不在 IDL_DIR 根目录，需要添加 -I 让 protoc 找到依赖
   if [[ "$idl_dir" != "$IDL_DIR" ]]; then
-    _pp_result+=("-I" "$IDL_DIR")
+    args+=("-I" "$IDL_DIR")
   fi
+  eval "${result_name}=(\"\${args[@]}\")"
 }
 
 ############################################
